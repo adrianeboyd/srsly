@@ -870,8 +870,8 @@ class CloudPickleTest(unittest.TestCase):
 
 
     @pytest.mark.skipif(
-        platform.machine == "aarch64" and sys.version_info[:2] >= (3, 10),
-        reason="Fails on aarch64 + python 3.10+, unsure why")
+        platform.machine() == "aarch64" and sys.version_info[:2] >= (3, 10),
+        reason="Fails on aarch64 + python 3.10+ in cibuildwheel, currently unable to replicate failure elsewhere")
     def test_builtin_classmethod(self):
         obj = 1.5  # float object
 
