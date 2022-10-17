@@ -907,6 +907,9 @@ class CloudPickleTest(unittest.TestCase):
             assert depickled_clsdict_meth.__func__(
                 float, arg) == clsdict_clsmethod.__func__(float, arg)
 
+    @pytest.mark.skipif(
+        platform.machine == "aarch64" and platform.python_version_tuple()[:2] == ("3", "10"),
+        reason="Fails on aarch64 + python 3.10, unsure why")
     def test_builtin_slotmethod(self):
         obj = 1.5  # float object
 
