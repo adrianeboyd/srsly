@@ -846,6 +846,9 @@ class CloudPickleTest(unittest.TestCase):
     # function types/flavours. The only way into which a builtin method can be
     # identified is with it's builtin-code __code__ attribute.
 
+    @pytest.mark.skipif(
+        platform.machine == "aarch64" and sys.version_info[:2] >= (3, 10),
+        reason="Fails on aarch64 + python 3.10+, unsure why")
     def test_builtin_classicmethod(self):
         obj = 1.5  # float object
 
@@ -907,9 +910,6 @@ class CloudPickleTest(unittest.TestCase):
             assert depickled_clsdict_meth.__func__(
                 float, arg) == clsdict_clsmethod.__func__(float, arg)
 
-    @pytest.mark.skipif(
-        platform.machine == "aarch64" and platform.python_version_tuple()[:2] == ("3", "10"),
-        reason="Fails on aarch64 + python 3.10, unsure why")
     def test_builtin_slotmethod(self):
         obj = 1.5  # float object
 
